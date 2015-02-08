@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import android.database.sqlite.SQLiteDatabase;
+import de.greenrobot.dao.wrapper.SQLiteDatabaseWrapper;
 import de.greenrobot.dao.async.AsyncSession;
 import de.greenrobot.dao.query.QueryBuilder;
 
@@ -44,10 +44,10 @@ import de.greenrobot.dao.query.QueryBuilder;
  * 
  */
 public class AbstractDaoSession {
-    private final SQLiteDatabase db;
+    private final SQLiteDatabaseWrapper db;
     private final Map<Class<?>, AbstractDao<?, ?>> entityToDao;
 
-    public AbstractDaoSession(SQLiteDatabase db) {
+    public AbstractDaoSession(SQLiteDatabaseWrapper db) {
         this.db = db;
         this.entityToDao = new HashMap<Class<?>, AbstractDao<?, ?>>();
     }
@@ -183,7 +183,7 @@ public class AbstractDaoSession {
     }
 
     /** Gets the SQLiteDatabase for custom database access. Not needed for greenDAO entities. */
-    public SQLiteDatabase getDatabase() {
+    public SQLiteDatabaseWrapper getDatabase() {
         return db;
     }
 

@@ -15,8 +15,8 @@
  */
 package de.greenrobot.dao.query;
 
-import android.database.sqlite.SQLiteDatabase;
 import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.wrapper.SQLiteDatabaseWrapper;
 
 /**
  * A repeatable query for deleting entities.<br/>
@@ -63,7 +63,7 @@ public class DeleteQuery<T> extends AbstractQuery<T> {
      */
     public void executeDeleteWithoutDetachingEntities() {
         checkThread();
-        SQLiteDatabase db = dao.getDatabase();
+        SQLiteDatabaseWrapper db = dao.getDatabase();
         if (db.isDbLockedByCurrentThread()) {
             dao.getDatabase().execSQL(sql, parameters);
         } else {

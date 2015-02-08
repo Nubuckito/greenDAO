@@ -18,11 +18,13 @@ package de.greenrobot.dao.test;
 
 import android.app.Application;
 import android.app.Instrumentation;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
 import android.test.AndroidTestCase;
-import de.greenrobot.dao.DbUtils;
 
 import java.util.Random;
+
+import de.greenrobot.dao.DbUtils;
+import de.greenrobot.dao.wrapper.SQLiteDatabaseWrapper;
 
 /**
  * Base class for database related testing, which prepares an in-memory or an file-based DB (using the test {@link
@@ -41,7 +43,7 @@ public abstract class DbTest extends AndroidTestCase {
 
     protected final Random random;
     protected final boolean inMemory;
-    protected SQLiteDatabase db;
+    protected SQLiteDatabaseWrapper db;
 
     private Application application;
 
@@ -88,12 +90,12 @@ public abstract class DbTest extends AndroidTestCase {
     }
 
     /** May be overriden by sub classes to set up a different db. */
-    protected SQLiteDatabase createDatabase() {
+    protected SQLiteDatabaseWrapper createDatabase() {
         if (inMemory) {
-            return SQLiteDatabase.create(null);
+            return SQLiteDatabaseWrapper.create(null,null);
         } else {
             getContext().deleteDatabase(DB_NAME);
-            return getContext().openOrCreateDatabase(DB_NAME, 0, null);
+            return new SQLiteDatabaseWrapper(getApplication().openOrCreateDatabase("test-db", Context.MODE_PRIVATE, null));
         }
     }
 

@@ -20,7 +20,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.database.sqlite.SQLiteDatabase;
+import de.greenrobot.dao.wrapper.SQLiteDatabaseWrapper;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.DaoException;
 import de.greenrobot.dao.Property;
@@ -35,7 +35,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
  */
 public final class DaoConfig implements Cloneable {
 
-    public final SQLiteDatabase db;
+    public final SQLiteDatabaseWrapper db;
     public final String tablename;
     public final Property[] properties;
 
@@ -50,7 +50,7 @@ public final class DaoConfig implements Cloneable {
 
     private IdentityScope<?, ?> identityScope;
 
-    public DaoConfig(SQLiteDatabase db, Class<? extends AbstractDao<?, ?>> daoClass) {
+    public DaoConfig(SQLiteDatabaseWrapper db, Class<? extends AbstractDao<?, ?>> daoClass) {
         this.db = db;
         try {
             this.tablename = (String) daoClass.getField("TABLENAME").get(null);

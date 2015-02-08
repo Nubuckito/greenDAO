@@ -16,18 +16,19 @@
 
 package de.greenrobot.dao;
 
+import android.database.Cursor;
+
 import java.lang.reflect.Constructor;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import de.greenrobot.dao.identityscope.IdentityScope;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.wrapper.SQLiteDatabaseWrapper;
 
 /** Reserved for internal unit tests that want to access some non-public methods. Don't use for anything else. */
 public class InternalUnitTestDaoAccess<T, K> {
     private final AbstractDao<T, K> dao;
 
-    public InternalUnitTestDaoAccess(SQLiteDatabase db, Class<AbstractDao<T, K>> daoClass, IdentityScope<?, ?> identityScope)
+    public InternalUnitTestDaoAccess(SQLiteDatabaseWrapper db, Class<AbstractDao<T, K>> daoClass, IdentityScope<?, ?> identityScope)
             throws Exception {
         DaoConfig daoConfig = new DaoConfig(db, daoClass);
         daoConfig.setIdentityScope(identityScope);

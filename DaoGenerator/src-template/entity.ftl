@@ -140,9 +140,9 @@ property>${property.javaType} ${property.propertyName}<#if property_has_next>, <
     public ${toOne.targetEntity.className} get${toOne.name?cap_first}() {
 <#if toOne.useFkProperty>
         ${toOne.fkProperties[0].javaType} __key = this.${toOne.fkProperties[0].propertyName};
-        if (${toOne.name}__resolvedKey == null || <#--
+        if (id != null && (${toOne.name}__resolvedKey == null || <#--
         --><#if toOne.resolvedKeyUseEquals[0]>!${toOne.name}__resolvedKey.equals(__key)<#--
-        --><#else>${toOne.name}__resolvedKey != __key</#if>) {
+        --><#else>${toOne.name}__resolvedKey != __key</#if>)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
@@ -154,7 +154,7 @@ property>${property.javaType} ${property.propertyName}<#if property_has_next>, <
             }
         }
 <#else>
-        if (${toOne.name} != null || !${toOne.name}__refreshed) {
+        if (id != null && (${toOne.name} != null || !${toOne.name}__refreshed)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
